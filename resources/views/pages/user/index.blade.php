@@ -51,7 +51,7 @@
                                 <div class="float-right">
                                     <form method="GET" action="{{ route('user.index') }}">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Search" name="name">
+                                            <input type="text" class="form-control" placeholder="Search" name="search">
                                             <div class="input-group-append">
                                                 <button class="btn btn-primary"><i class="fas fa-search"></i></button>
                                             </div>
@@ -68,20 +68,17 @@
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Phone</th>
+                                            <th>Roles</th>
                                             <th>Created At</th>
                                             <th>Action</th>
                                         </tr>
                                         @foreach ($users as $user)
                                             <tr>
 
-                                                <td>{{ $user->name }}
-                                                </td>
-                                                <td>
-                                                    {{ $user->email }}
-                                                </td>
-                                                <td>
-                                                    {{ $user->phone }}
-                                                </td>
+                                                <td>{{ $user->name }}</td>
+                                                <td>{{ $user->email }}</td>
+                                                <td>{{ $user->phone }}</td>
+                                                <td>{{ $user->roles }}</td>
                                                 <td>{{ $user->created_at }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
@@ -108,7 +105,7 @@
 
                                     </table>
                                 </div>
-                                <div class="float-right">
+                                <div class="float-right" style="padding-top: 15px">
                                     {{ $users->withQueryString()->links() }}
                                 </div>
                             </div>
