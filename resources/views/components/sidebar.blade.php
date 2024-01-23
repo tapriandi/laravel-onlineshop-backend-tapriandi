@@ -22,12 +22,22 @@
                 </ul>
             </li>
 
-            <li class="menu-header">Users</li>
+            {{-- <li class="menu-header">Users</li> --}}
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Users</span></a>
                 <ul class="dropdown-menu">
                     <li>
                         <a class="nav-link" href="{{ url('user') }}">All Users</a>
+                    </li>
+                </ul>
+            </li>
+
+            {{-- <li class="menu-header">Users</li> --}}
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Category</span></a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a class="nav-link" href="{{ url('category') }}">All Category</a>
                     </li>
                 </ul>
             </li>
