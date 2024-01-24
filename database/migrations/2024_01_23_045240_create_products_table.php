@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->string('image')->nullable();
-            $table->integer('price');
+            $table->float('price');
             $table->integer('stock');
             $table->boolean('is_available')->default(true);
             $table->timestamps();
