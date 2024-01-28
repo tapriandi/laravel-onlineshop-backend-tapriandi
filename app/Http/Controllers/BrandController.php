@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Brand;
+use App\Models\BrandCategory;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +13,7 @@ class BrandController extends Controller
 {
     public function index(Request $request)
     {
-        $brands = DB::table('brands')
+        $brands = Brand::with('categories')
             ->when($request->search, function ($query) use ($request) {
                 $query->where('name', 'like', '%' . $request->search . '%');
             })
@@ -32,9 +33,15 @@ class BrandController extends Controller
 
         $data = $request->all();
         $data['user_id'] = $userId;
-        Brand::create($data);
 
-        return redirect()->route('brand.index')
+        $brand = Brand::create($data);
+
+        if (isset($data['category_id']) && is_array($data['category_id'])) {
+            $brand->categories()->sync($data['category_id']); // Base table or view not found: 1146 Table 'laravel-onlineshop.brand_category' doesn't exist
+        }
+
+        return
+            redirect()->route('brand.index')
             ->with(
                 'success',
                 'Brand successfully created'

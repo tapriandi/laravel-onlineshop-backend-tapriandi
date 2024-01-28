@@ -12,15 +12,15 @@ class Brand extends Model
     protected $fillable = [
         'user_id',
         'name',
-        'website',
-        'instagram',
-        'facebook',
-        'twitter',
+        // 'website',
+        // 'instagram',
+        // 'facebook',
+        // 'twitter',
         'description',
-        'rate_playstore',
-        'rate_appstore',
-        'playstore_link',
-        'appstore_link',
+        // 'rate_playstore',
+        // 'rate_appstore',
+        // 'playstore_link',
+        // 'appstore_link',
     ];
 
     public function user()
@@ -28,7 +28,7 @@ class Brand extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function category()
+    public function categories()
     {
         return $this->belongsToMany(Category::class);
     }

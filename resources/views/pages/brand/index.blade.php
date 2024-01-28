@@ -52,7 +52,8 @@
                                         <tr>
 
                                             <th>Name</th>
-                                            {{-- <th>Contributor</th> --}}
+                                            <th>Category</th>
+                                            <th>Description</th>
                                             <th>Created At</th>
                                             <th>Action</th>
                                         </tr>
@@ -60,7 +61,12 @@
                                             <tr>
 
                                                 <td>{{ $brand->name }}</td>
-                                                {{-- <td>{{ $brand->user->name }}</td   > --}}
+                                                <td>
+                                                    @foreach ($brand->categories as $category)
+                                                        - {{ $category->name }} <br>
+                                                    @endforeach
+                                                </td>
+                                                <td>{{ $brand->description }}</td>
                                                 <td>{{ $brand->created_at }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">

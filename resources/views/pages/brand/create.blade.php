@@ -170,16 +170,16 @@
                             </div>
                             {{--  --}}
                             <div class="form-group">
-                                <label class="form-label">Category</label>
-                                <select class="form-control selectric @error('category_id') is-invalid @enderror"
-                                    name="category_id">
-                                    <option value="">-- Select Category --</option>
-                                    @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}">
+                                <label class="form-label">Categories</label>
+                                @foreach ($categories as $category)
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="checkbox" name="category_id[]"
+                                                value="{{ $category->id }}">
                                             {{ $category->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                        </label>
+                                    </div>
+                                @endforeach
                             </div>
 
 
