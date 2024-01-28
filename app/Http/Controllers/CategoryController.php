@@ -26,6 +26,10 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+        $hashtags = explode(',', $request->input('hashtag'));
+        $hashtags = array_map('trim', $hashtags);
+        $data['hashtag'] = json_encode($hashtags);
+
         Category::create($data);
         return redirect()->route('category.index');
     }
@@ -39,6 +43,10 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->all();
+        $hashtags = explode(',', $request->input('hashtag'));
+        $hashtags = array_map('trim', $hashtags);
+        $data['hashtag'] = json_encode($hashtags);
+
         $category = Category::findOrFail($id);
         $category->update($data);
         return redirect()->route('category.index');

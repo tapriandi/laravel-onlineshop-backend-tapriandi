@@ -33,6 +33,7 @@ class BrandController extends Controller
         $data = $request->all();
         $data['user_id'] = $userId;
         Brand::create($data);
+
         return redirect()->route('brand.index')
             ->with(
                 'success',
@@ -42,22 +43,26 @@ class BrandController extends Controller
 
     // public function edit($id)
     // {
-    //     $category = Category::findOrFail($id);
-    //     return view('pages.category.edit', compact('category'));
+    //     $brand = Brand::findOrFail($id);
+    //     return view('pages.brand.edit', compact('brand'));
     // }
 
     // public function update(Request $request, $id)
     // {
     //     $data = $request->all();
-    //     $category = Category::findOrFail($id);
-    //     $category->update($data);
-    //     return redirect()->route('category.index');
+    //     $brand = brand::findOrFail($id);
+    //     $brand->update($data);
+    //     return redirect()->route('brand.index');
     // }
 
-    // public function destroy($id)
-    // {
-    //     $category = Category::findOrFail($id);
-    //     $category->delete();
-    //     return redirect()->route('category.index');
-    // }
+    public function destroy($id)
+    {
+        $brand = Brand::findOrFail($id);
+        $brand->delete();
+        return redirect()->route('brand.index')
+            ->with(
+                'success',
+                'Deleted successfully'
+            );
+    }
 }

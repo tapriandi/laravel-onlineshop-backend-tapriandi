@@ -48,13 +48,13 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label>Description</label>
+                                <label>Hashtag</label>
                                 <input type="text"
-                                    class="form-control @error('description')
+                                    class="form-control @error('hashtag')
                                 is-invalid
                             @enderror"
-                                    name="description" value="{{ $category->description }}">
-                                @error('description')
+                                    name="hashtag" value="{{ implode(', ', json_decode($category->hashtag)) }}">
+                                @error('hashtag')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>

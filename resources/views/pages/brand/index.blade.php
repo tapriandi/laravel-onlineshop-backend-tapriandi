@@ -60,7 +60,7 @@
                                             <tr>
 
                                                 <td>{{ $brand->name }}</td>
-                                                {{-- <td>{{ $brand->user->name }}</td>  ini error --}}
+                                                {{-- <td>{{ $brand->user->name }}</td   > --}}
                                                 <td>{{ $brand->created_at }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">

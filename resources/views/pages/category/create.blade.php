@@ -50,13 +50,13 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label>Description</label>
-                                <input type="text"
-                                    class="form-control @error('description')
+                                <label>Hashtag</label>
+                                <input type="text" placeholder="Enter hashtags, separated by commas"
+                                    class="form-control @error('hashtag')
                                 is-invalid
                             @enderror"
-                                    name="description">
-                                @error('description')
+                                    name="hashtag">
+                                @error('hashtag')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>

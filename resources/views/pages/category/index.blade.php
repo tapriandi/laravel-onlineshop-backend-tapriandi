@@ -32,7 +32,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>All Posts</h4>
+                                <h4>All Category</h4>
                             </div>
                             <div class="card-body">
                                 <div class="clearfix mb-3"></div>
@@ -42,7 +42,7 @@
                                         <tr>
 
                                             <th>Name</th>
-                                            {{-- <th>Description</th> --}}
+                                            <th>Hashtag</th>
                                             <th>Created At</th>
                                             <th>Action</th>
                                         </tr>
@@ -50,7 +50,11 @@
                                             <tr>
 
                                                 <td>{{ $category->name }}</td>
-                                                {{-- <td>{{ $category->description }}</td> --}}
+                                                <td>
+                                                    @php
+                                                        $hashtags = json_decode($category->hashtag);
+                                                        echo implode(', ', $hashtags);
+                                                    @endphp
                                                 <td>{{ $category->created_at }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
