@@ -34,7 +34,7 @@
             {{-- Dashboard --}}
             <li class="menu-header">Screenboard</li>
             <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown"><i class="fas fa-star"></i><span>Category</span></a>
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-hashtag"></i><span>Category</span></a>
                 <ul class="dropdown-menu">
                     <li>
                         <a class="nav-link" href="{{ url('category') }}">All Category</a>
@@ -50,15 +50,24 @@
                     </li>
                 </ul>
             </li>
-            {{-- <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown"><i class="fas fa-cubes"></i><span>Images</span></a>
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-image"></i><span>Images</span></a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a class="nav-link" href="{{ url('product') }}">All Product</a>
+                        <a class="nav-link" href="{{ url('image') }}">All Images</a>
                     </li>
                 </ul>
             </li>
             <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-cube"></i><span>Modules</span></a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a class="nav-link" href="{{ url('module') }}">All Module</a>
+                    </li>
+                </ul>
+            </li>
+
+            {{-- <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-cubes"></i><span>Modules</span></a>
                 <ul class="dropdown-menu">
                     <li>
