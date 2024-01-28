@@ -18,8 +18,8 @@ class CategoryFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'description' => fake()->text(),
-            'image' => fake()->imageUrl(),
+            'icon' => fake()->imageUrl(),
+            'hashtag' => json_encode($this->faker->words),
         ];
     }
 }
