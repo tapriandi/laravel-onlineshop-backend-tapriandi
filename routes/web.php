@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ImageCategoryController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\ProductController;
@@ -34,5 +35,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('product', ProductController::class);
     Route::resource('brand', BrandController::class);
     Route::resource('image', ImageController::class);
+    Route::resource('image-category', ImageCategoryController::class);
     Route::resource('module', ModuleController::class);
 });

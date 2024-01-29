@@ -56,6 +56,9 @@
                     <li>
                         <a class="nav-link" href="{{ url('image') }}">All Images</a>
                     </li>
+                    <li>
+                        <a class="nav-link" href="{{ url('image-category') }}">All Images Category</a>
+                    </li>
                 </ul>
             </li>
             <li class="nav-item dropdown">

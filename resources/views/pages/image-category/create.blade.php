@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Create Image')
+@section('title', 'Create Image Category')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -16,18 +16,18 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Create Image</h1>
+                <h1>Create Image Category</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
                     <div class="breadcrumb-item"><a href="#">Forms</a></div>
-                    <div class="breadcrumb-item">Images</div>
+                    <div class="breadcrumb-item">Images Category</div>
                 </div>
             </div>
 
             <div class="section-body">
-                <h2 class="section-title">Image</h2>
+                <h2 class="section-title">Image Category</h2>
                 <div class="card">
-                    <form action="{{ route('image.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('image-category.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="card-body">
                             <div class="form-group">
@@ -38,17 +38,6 @@
                             @enderror"
                                     name="name">
                                 @error('name')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                            {{--  --}}
-                            <div class="form-group">
-                                <label>Caption</label>
-                                <textarea type="text" class="form-control  @error('caption') is-invalid @enderror" name="caption"
-                                    style="height:100px;"></textarea>
-                                @error('caption')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -70,24 +59,24 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="form-label">Module</label>
-                                <select class="form-control selectric @error('module_id') is-invalid @enderror"
-                                    name="module_id">
-                                    <option value="">-- Select Module --</option>
-                                    @foreach ($modules as $module)
-                                        <option value="{{ $module->id }}">
-                                            {{ $module->name }}
+                                <label class="form-label">Images</label>
+                                <select class="form-control selectric @error('image_id') is-invalid @enderror"
+                                    name="image_id">
+                                    <option value="">-- Select Image --</option>
+                                    @foreach ($images as $image)
+                                        <option value="{{ $image->id }}">
+                                            {{ $image->name }}
                                         </option>
                                     @endforeach
                                 </select>
                             </div>
 
                             <div class="form-group">
-                                <label>Upload Images</label>
+                                <label>Upload Icon</label>
                                 <div class="col-sm-g">
-                                    <input type="file" class="form-control" name="url"
-                                        @error('url') is-invalid @enderror>
-                                    @error('url')
+                                    <input type="file" class="form-control" name="icon"
+                                        @error('icon') is-invalid @enderror>
+                                    @error('icon')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>

@@ -7,8 +7,8 @@
                         class="fas fa-search"></i></a></li>
         </ul>
         <div class="search-element">
-            <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="250">
-            <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+            {{-- <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="250">
+            <button class="btn" type="submit"><i class="fas fa-search"></i></button> --}}
             <div class="search-backdrop"></div>
             {{-- <div class="search-result">
                 <div class="search-header">

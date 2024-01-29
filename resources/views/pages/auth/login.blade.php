@@ -19,6 +19,7 @@
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input id="email" type="email"
+                        value="admin@mail.com"
                         class="form-control @error('email')
                         is-invalid
                     @enderror"
@@ -36,7 +37,7 @@
                         <label for="password" class="control-label">Password</label>
 
                     </div>
-                    <input id="password" type="password"
+                    <input id="password" type="password" value="12345"
                         class="form-control @error('password')
                         is-invalid
                     @enderror"
