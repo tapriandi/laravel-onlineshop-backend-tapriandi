@@ -58,11 +58,11 @@
                                                 <td>{{ $category->created_at }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
-                                                        {{-- <a href='{{ route('category.edit', $category->id) }}'
+                                                        <a href='{{ route('category.edit', $category->id) }}'
                                                             class="btn btn-sm btn-info btn-icon">
                                                             <i class="fas fa-edit"></i>
                                                             Edit
-                                                        </a> --}}
+                                                        </a>
 
                                                         <form action="{{ route('category.destroy', $category->id) }}"
                                                             method="POST" class="ml-2">

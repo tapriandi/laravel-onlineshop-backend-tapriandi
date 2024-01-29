@@ -26,67 +26,57 @@ class ImageController extends Controller
 
     public function store(Request $request)
     {
+        {
+            $data = $request->all();
+            $hashtags = explode(',', $request->input('hashtag'));
+            $hashtags = array_map('trim', $hashtags);
+            $data['hashtag'] = json_encode($hashtags);
+
+            if ($data['url']) {
+                $filename = time() . '.' . $request->url->extension();
+                $request->url->move(public_path('image'), $filename);
+
+                $data['url'] = $filename;
+            }
+
+            Image::create($data);
+            return redirect()->route('image.index')
+                ->with(
+                    'success',
+                    'Image successfully created'
+                );
+        }
+    }
+
+    public function edit($id)
+    {
+        $image = Image::findOrFail($id);
+        $modules = Module::all();
+        return view('pages.image.edit', compact('image', 'modules'));
+    }
+
+    public function update(Request $request, $id)
+    {
         $data = $request->all();
-
-        $hashtags = explode(',', $request->input('hashtag'));
-        $hashtags = array_map('trim', $hashtags);
-        $data['hashtag'] = json_encode($hashtags);
-
-        if ($data['url']) {
+        if ($request->hasFile('url')) {
             $filename = time() . '.' . $request->url->extension();
             $request->url->move(public_path('image'), $filename);
 
             $data['url'] = $filename;
         }
-        // multiple
-        // if ($request->hasFile('url')) {
-        //     // Access the array of uploaded images:
-        //     $images = $request->file('url');
 
-        //     foreach ($images as $image) {
-        //         // Generate a unique filename for each image:
-        //         $filename = time() . '.' . $image->extension();
+        $hashtags = explode(',', $request->input('hashtag'));
+        $hashtags = array_map('trim', $hashtags);
+        $data['hashtag'] = json_encode($hashtags);
 
-        //         // Move the image to the desired storage path:
-        //         $image->move(public_path('image'), $filename);
+        $image = Image::findOrFail($id);
 
-        //         // Store the filename(s) in the data array (adjust based on your model structure):
-        //         $data['url'][] = $filename; // Assuming you want to store multiple URLs
-        //     }
-        // }
+        $image->update($data);
 
-        Image::create($data);
-
-        return redirect()->route('image.index')
-            ->with(
-                'success',
-                'Image successfully created'
-            );
+        return
+            redirect()->route('image.index')
+            ->with('success', 'Image updated!');
     }
-
-    // public function edit($id)
-    // {
-    //     $product = Product::findOrFail($id);
-    //     $categories = Category::all();
-    //     return view('pages.product.edit', compact('product', 'categories'));
-    // }
-
-    // public function update(Request $request, $id)
-    // {
-    //     $data = $request->all();
-    //     if ($data['image']) {
-    //         $filename = time() . '.' . $request->image->extension();
-    //         $request->image->move(public_path('product'), $filename);
-
-    //         $data['image'] = $filename;
-    //     }
-    //     $product = Product::findOrFail($id);
-
-    //     $product->update($data);
-
-    //     return redirect()->route('product.index')
-    //         ->with('success', 'Product updated!');;
-    // }
 
     public function destroy($id)
     {

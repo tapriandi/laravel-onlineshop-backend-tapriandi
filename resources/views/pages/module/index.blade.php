@@ -75,7 +75,7 @@
                                                 </td> --}}
                                                 <td>
                                                     @if ($module->icon)
-                                                        <img src="{{ asset('icon/' . $module->icon) }}" alt=""
+                                                        <img src="{{ asset('module/' . $module->icon) }}" alt=""
                                                             style="height:50px; width:100px; object-fit:cover;">
                                                     @endif
                                                 </td>
@@ -83,11 +83,11 @@
                                                 <td>{{ $module->created_at }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
-                                                        {{-- <a href='{{ route('module.edit', $module->id) }}'
+                                                        <a href='{{ route('module.edit', $module->id) }}'
                                                             class="btn btn-sm btn-info btn-icon">
                                                             <i class="fas fa-edit"></i>
                                                             Edit
-                                                        </a> --}}
+                                                        </a>
 
                                                         <form action="{{ route('module.destroy', $module->id) }}"
                                                             method="POST" class="ml-2">

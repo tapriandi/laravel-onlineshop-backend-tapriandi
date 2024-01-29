@@ -44,29 +44,30 @@ class ModuleController extends Controller
             );
     }
 
-    // public function edit($id)
-    // {
-    //     $product = Product::findOrFail($id);
-    //     $categories = Category::all();
-    //     return view('pages.product.edit', compact('product', 'categories'));
-    // }
+    public function edit($id)
+    {
+        $module = Module::findOrFail($id);
+        $brands = Brand::all();
+        return view('pages.module.edit', compact('module', 'brands'));
+    }
 
-    // public function update(Request $request, $id)
-    // {
-    //     $data = $request->all();
-    //     if ($data['image']) {
-    //         $filename = time() . '.' . $request->image->extension();
-    //         $request->image->move(public_path('product'), $filename);
+    public function update(Request $request, $id)
+    {
+        $data = $request->all();
+        if ($request->hasFile('icon')) {
+            $filename = time() . '.' . $request->icon->extension();
+            $request->icon->move(public_path('module'), $filename);
 
-    //         $data['image'] = $filename;
-    //     }
-    //     $product = Product::findOrFail($id);
+            $data['icon'] = $filename;
+        }
+        $module = Module::findOrFail($id);
 
-    //     $product->update($data);
+        $module->update($data);
 
-    //     return redirect()->route('product.index')
-    //         ->with('success', 'Product updated!');;
-    // }
+        return
+            redirect()->route('module.index')
+            ->with('success', 'Brand updated!');
+    }
 
     public function destroy($id)
     {

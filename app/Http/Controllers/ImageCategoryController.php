@@ -48,29 +48,35 @@ class ImageCategoryController extends Controller
             );
     }
 
-    // public function edit($id)
-    // {
-    //     $product = Product::findOrFail($id);
-    //     $categories = Category::all();
-    //     return view('pages.product.edit', compact('product', 'categories'));
-    // }
+    public function edit($id)
+    {
+        $imageCategory = ImageCategory::findOrFail($id);
+        $images = Image::all();
+        return view('pages.image-category.edit', compact('imageCategory', 'images'));
+    }
 
-    // public function update(Request $request, $id)
-    // {
-    //     $data = $request->all();
-    //     if ($data['image']) {
-    //         $filename = time() . '.' . $request->image->extension();
-    //         $request->image->move(public_path('product'), $filename);
+    public function update(Request $request, $id)
+    {
+        $data = $request->all();
+        if ($request->hasFile('icon')) {
+            $filename = time() . '.' . $request->icon->extension();
+            $request->icon->move(public_path('imageCategory'), $filename);
 
-    //         $data['image'] = $filename;
-    //     }
-    //     $product = Product::findOrFail($id);
+            $data['icon'] = $filename;
+        }
 
-    //     $product->update($data);
+        $hashtags = explode(',', $request->input('hashtag'));
+        $hashtags = array_map('trim', $hashtags);
+        $data['hashtag'] = json_encode($hashtags);
 
-    //     return redirect()->route('product.index')
-    //         ->with('success', 'Product updated!');;
-    // }
+        $image = ImageCategory::findOrFail($id);
+
+        $image->update($data);
+
+        return
+            redirect()->route('image-category.index')
+            ->with('success', 'Image category updated!');
+    }
 
     public function destroy($id)
     {

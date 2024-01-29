@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Products')
+@section('title', 'Edit Image')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -16,30 +16,27 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Advanced Forms</h1>
+                <h1>Edit Image</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
                     <div class="breadcrumb-item"><a href="#">Forms</a></div>
-                    <div class="breadcrumb-item">Products</div>
+                    <div class="breadcrumb-item">Image</div>
                 </div>
             </div>
 
             <div class="section-body">
-                <h2 class="section-title">Products</h2>
+                <h2 class="section-title">Image</h2>
                 <div class="card">
-                    <form action="{{ route('product.update', $product) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('image.update', $image) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                        <div class="card-header">
-                            <h4>Input Text</h4>
-                        </div>
                         <div class="card-body">
                             <div class="form-group">
                                 <label>Name</label>
                                 <input type="text"
                                     class="form-control
                                 @error('name') is-invalid @enderror"
-                                    name="name" value="{{ $product->name }}">
+                                    name="name" value="{{ $image->name }}">
                                 @error('name')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -47,34 +44,24 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label>Description</label>
-                                <textarea type="text" class="form-control  @error('description') is-invalid @enderror" name="description"
-                                    style="height:100px;">{{ $product->description }}</textarea>
-                                @error('description')
+                                <label>Caption</label>
+                                <textarea type="text" class="form-control
+                                @error('caption') is-invalid @enderror"
+                                    name="caption" style="height:100px;">{{ $image->caption }}</textarea>
+                                @error('caption')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label>Proce</label>
-                                <input type="number"
-                                    class="form-control
-                                @error('price') is-invalid @enderror"
-                                    name="price" value="{{ $product->price }}">
-                                @error('price')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label>Stock</label>
-                                <input type="number"
-                                    class="form-control
-                                @error('stock') is-invalid @enderror"
-                                    name="stock" value="{{ $product->stock }}">
-                                @error('stock')
+                                <label>Hashtag</label>
+                                <input type="text"
+                                    class="form-control @error('hashtag')
+                                is-invalid
+                            @enderror"
+                                    name="hashtag" value="{{ implode(',', json_decode($image->hashtag)) }}">
+                                @error('hashtag')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -82,30 +69,30 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="form-label">Category</label>
+                                <label class="form-label">Module</label>
                                 <select class="form-control selectric @error('category_id') is-invalid @enderror"
                                     name="category_id">
                                     <option value="">-- Select Category --</option>
-                                    @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}"
-                                            selected={{ old('category_id') == $category->id && true }}>
-                                            {{ $category->name }}
+                                    @foreach ($modules as $module)
+                                        <option value="{{ $module->id }}"
+                                            selected={{ old('module_id') == $module->id && true }}>
+                                            {{ $module->name }}
                                         </option>
                                     @endforeach
                                 </select>
                             </div>
 
 
-                            @if ($product->image)
-                                <img src="{{ asset('product/' . $product->image) }}" alt="" style="width:40%;">
+                            @if ($image->url)
+                                <img src="{{ asset('image/' . $image->url) }}" alt="" style="width:40%; margin-bottom: 20px;">
                             @endif
 
                             <div class="form-group">
-                                <label>Photo product</label>
+                                <label>Photo image</label>
                                 <div class="col-sm-g">
-                                    <input type="file" class="form-control" name="image"
-                                        @error('image') is-invalid @enderror>
-                                    @error('image')
+                                    <input type="file" class="form-control" name="url"
+                                        @error('url') is-invalid @enderror>
+                                    @error('url')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>

@@ -78,11 +78,11 @@
                                                 <td>{{ $image->created_at }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
-                                                        {{-- <a href='{{ route('image-category.edit', $image->id) }}'
+                                                        <a href='{{ route('image-category.edit', $image->id) }}'
                                                             class="btn btn-sm btn-info btn-icon">
                                                             <i class="fas fa-edit"></i>
                                                             Edit
-                                                        </a> --}}
+                                                        </a>
 
                                                         <form action="{{ route('image-category.destroy', $image->id) }}"
                                                             method="POST" class="ml-2">

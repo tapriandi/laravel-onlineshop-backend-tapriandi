@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Edit User')
+@section('title', 'Edit Category')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -16,16 +16,16 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Advanced Forms</h1>
+                <h1>Edit Category</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
                     <div class="breadcrumb-item"><a href="#">Forms</a></div>
-                    <div class="breadcrumb-item">Categories</div>
+                    <div class="breadcrumb-item">Category</div>
                 </div>
             </div>
 
             <div class="section-body">
-                <h2 class="section-title">Categories</h2>
+                <h2 class="section-title">Category</h2>
                 <div class="card">
                     <form action="{{ route('category.update', $category) }}" method="POST">
                         @csrf
@@ -53,7 +53,7 @@
                                     class="form-control @error('hashtag')
                                 is-invalid
                             @enderror"
-                                    name="hashtag" value="{{ implode(', ', json_decode($category->hashtag)) }}">
+                                    name="hashtag" value="{{ implode(',', json_decode($category->hashtag)) }}">
                                 @error('hashtag')
                                     <div class="invalid-feedback">
                                         {{ $message }}

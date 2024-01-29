@@ -48,19 +48,27 @@ class BrandController extends Controller
             );
     }
 
-    // public function edit($id)
-    // {
-    //     $brand = Brand::findOrFail($id);
-    //     return view('pages.brand.edit', compact('brand'));
-    // }
+    public function edit($id)
+    {
+        $brand = Brand::findOrFail($id);
+        $categories = Category::all();
+        return view('pages.brand.edit', compact('brand', 'categories'));
+    }
 
-    // public function update(Request $request, $id)
-    // {
-    //     $data = $request->all();
-    //     $brand = brand::findOrFail($id);
-    //     $brand->update($data);
-    //     return redirect()->route('brand.index');
-    // }
+    public function update(Request $request, $id)
+    {
+        $data = $request->all();
+        $brand = brand::findOrFail($id);
+        if (isset($data['category_id']) && is_array($data['category_id'])) {
+            $brand->categories()->sync($data['category_id']); // Base table or view not found: 1146 Table 'laravel-onlineshop.brand_category' doesn't exist
+        }
+        $brand->update($data);
+        return redirect()->route('brand.index')
+            ->with(
+                'success',
+                'Brand successfully updated'
+            );
+    }
 
     public function destroy($id)
     {
