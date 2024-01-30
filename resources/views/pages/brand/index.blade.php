@@ -53,6 +53,8 @@
 
                                             <th>Name</th>
                                             <th>Category</th>
+                                            <th>Icon</th>
+                                            <th>Banner</th>
                                             <th>Description</th>
                                             <th>Created At</th>
                                             <th>Action</th>
@@ -65,6 +67,18 @@
                                                     @foreach ($brand->categories as $category)
                                                         - {{ $category->name }} <br>
                                                     @endforeach
+                                                </td>
+                                                <td>
+                                                    @if ($brand->icon)
+                                                        <img src="{{ asset('brand/' . $brand->icon) }}" alt=""
+                                                            style="height:50px; width:100px; object-fit:cover;">
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if ($brand->banner)
+                                                        <img src="{{ asset('brand/' . $brand->banner) }}" alt=""
+                                                            style="height:50px; width:100px; object-fit:cover;">
+                                                    @endif
                                                 </td>
                                                 <td>{{ $brand->description }}</td>
                                                 <td>{{ $brand->created_at }}</td>

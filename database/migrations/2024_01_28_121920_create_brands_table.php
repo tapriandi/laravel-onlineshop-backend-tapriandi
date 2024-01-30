@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('facebook')->nullable();
             $table->string('twitter')->nullable();
             $table->text('description');
+            $table->string('icon')->nulable();
+            $table->string('banner')->nulable();
             $table->string('rate_playstore')->nullable();
             $table->string('rate_appstore')->nullable();
             $table->string('playstore_link')->nullable();

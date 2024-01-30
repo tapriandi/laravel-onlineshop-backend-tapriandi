@@ -2,13 +2,10 @@
 
 @section('title', 'Edit Brand')
 
+
 @push('style')
     <!-- CSS Libraries -->
-    <link rel="stylesheet" href="{{ asset('library/bootstrap-daterangepicker/daterangepicker.css') }}">
-    <link rel="stylesheet" href="{{ asset('library/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('library/select2/dist/css/select2.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('library/selectric/public/selectric.css') }}">
-    <link rel="stylesheet" href="{{ asset('library/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('library/summernote/dist/summernote-bs4.css') }}">
     <link rel="stylesheet" href="{{ asset('library/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}">
 @endpush
 
@@ -30,26 +27,161 @@
                     <form action="{{ route('brand.update', $brand) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                        {{-- <div class="card-header">
-                            <h4>Input Text</h4>
-                        </div> --}}
+                        {{-- @if (in_array($category->id, $brand->category_id)) checked @endif --}}
                         <div class="card-body">
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text"
-                                    class="form-control
-                                @error('name') is-invalid @enderror"
+                                <input type="text" class="form-control @error('name') is-invalid  @enderror"
                                     name="name" value="{{ $brand->name }}">
                                 @error('name')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
+                                    <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="form-group">
-                                <label>Description</label>
-                                <textarea type="text" class="form-control  @error('description') is-invalid @enderror" name="description"
-                                    style="height:100px;">{{ $brand->description }}</textarea>
+
+                            {{--  --}}
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Website</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control @error('website') is-invalid  @enderror"
+                                            name="website" value="{{ $brand->website }}">
+                                    </div>
+                                    @error('website')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Instagram</label>
+                                    <div class="input-group" value="{{ $brand->instagram }}">
+                                        <input type="text" class="form-control @error('instagram') is-invalid @enderror"
+                                            name="instagram">
+                                    </div>
+                                    @error('instagram')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            {{--  --}}
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Facebook</label>
+                                    <div class="input-group" value="{{ $brand->facebook }}">
+                                        <input type="text" class="form-control @error('facebook') is-invalid @enderror"
+                                            name="facebook">
+                                    </div>
+                                    @error('facebook')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Twitter</label>
+                                    <input type="text" class="form-control @error('twitter') is-invalid  @enderror"
+                                        name="twitter" value="{{ $brand->twitter }}">
+                                    @error('twitter')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            {{--  --}}
+                            <div class="form-row">
+                                <div class="form-group col-md-6"">
+                                    <label>Rate Playstore</label>
+                                    <input type="text" class="form-control @error('rate_playstore') is-invalid @enderror"
+                                        name="rate_playstore" value="{{ $brand->rate_playstore }}">
+                                    @error('rate_playstore')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-6"">
+                                    <label>Rate Appstore</label>
+                                    <input type="text" class="form-control @error('rate_appstore') is-invalid @enderror"
+                                        name="rate_appstore" value="{{ $brand->rate_appstore }}">
+                                    @error('rate_appstore')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            {{--  --}}
+                            <div class="form-row">
+                                <div class="form-group col-md-6"">
+                                    <label>Playstore Link</label>
+                                    <input type="text" class="form-control @error('playstore_link') is-invalid @enderror"
+                                        name="playstore_link" value="{{ $brand->playstore_link }}">
+                                    @error('playstore_link')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-6"">
+                                    <label>Appstore Link</label>
+                                    <input type="text" class="form-control @error('appstore_link') is-invalid @enderror"
+                                        name="appstore_link" value="{{ $brand->appstore_link }}">
+                                    @error('appstore_link')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            {{--  --}}
+
+                            <div class="form-group mt-4">
+
+                                <label class="form-label">
+                                    <h6>Select Categories</h6>
+                                </label>
+                                @foreach ($categories as $category)
+                                    <div class="custom-control custom-checkbox mt-2">
+                                        <input type="checkbox" name="category_id[]" class="custom-control-input"
+                                            value="{{ $category->id }}" id="cat-{{ $category->id }}">
+                                        <label class="custom-control-label"
+                                            for="cat-{{ $category->id }}">{{ $category->name }}</label>
+                                    </div>
+                                @endforeach
+                            </div>
+
+                            {{--  --}}
+                            <hr />
+                            @if ($brand->icon)
+                                <p>Current Icon</p>
+                                <img src="{{ asset('brand/' . $brand->icon) }}" alt=""
+                                    style="width:10%; margin-bottom: 20px;">
+                            @endif
+                            <div class="form-group mb-5">
+                                <label class="form-label">
+                                    <h6>Upload Icon</h6>
+                                </label>
+                                <div class="form-group col-md-6">
+                                    <input type="file" name="icon" class="form-control" />
+                                </div>
+                            </div>
+
+                            {{--  --}}
+                            <hr />
+                            @if ($brand->banner)
+                                <p>Current Banner</p>
+                                <img src="{{ asset('brand/' . $brand->banner) }}" alt=""
+                                    style="width:50%; margin-bottom: 20px   ;">
+                            @endif
+                            <div class="form-group mb-5">
+                                <label class="form-label">
+                                    <h6>Upload Banner</h6>
+                                </label>
+                                <div class="col-sm-12 col-md-7">
+                                    <div id="image-preview" class="image-preview col-sm-12" style="width: 100%">
+                                        <label for="image-upload" id="image-label">Choose Banner</label>
+                                        <input type="file" name="banner" id="image-upload" />
+                                    </div>
+                                </div>
+                            </div>
+                            {{--  --}}
+                            <hr />
+                            <div class="form-group mt-5 mb-5">
+                                <label class="form-label">
+                                    <h6>Deascription</h6>
+                                </label>
+                                <textarea class="form-control summernote-simple @error('description') is-invalid @enderror" name="description">
+                                    {{ $brand->description }}</textarea>
                                 @error('description')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -57,170 +189,9 @@
                                 @enderror
                             </div>
 
-                            {{--
-                            <div class="form-group">
-                                <label>Proce</label>
-                                <input type="number"
-                                    class="form-control
-                                @error('price') is-invalid @enderror"
-                                    name="price" value="{{ $brand->price }}">
-                                @error('price')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
+                            <div class="card-footer text-right mt-5">
+                                <button class="btn btn-primary">Submit</button>
                             </div>
-                            <div class="form-group">
-                                <label>Stock</label>
-                                <input type="number"
-                                    class="form-control
-                                @error('stock') is-invalid @enderror"
-                                    name="stock" value="{{ $brand->stock }}">
-                                @error('stock')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label">Category</label>
-                                <select class="form-control selectric @error('category_id') is-invalid @enderror"
-                                    name="category_id">
-                                    <option value="">-- Select Category --</option>
-                                    @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}"
-                                            selected={{ old('category_id') == $category->id && true }}>
-                                            {{ $category->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div> --}}
-                            {{--  --}}
-
-                            <div class="form-group">
-                                <label>Website</label>
-                                <input type="text"
-                                    class="form-control
-                                @error('website') is-invalid @enderror"
-                                    name="website" value="{{ $brand->website }}">
-                                @error('website')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                            {{--  --}}
-                            <div class="form-group">
-                                <label>Instagram</label>
-                                <input type="text"
-                                    class="form-control
-                                @error('instagram') is-invalid @enderror"
-                                    name="instagram" value="{{ $brand->instagram }}">
-                                @error('instagram')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                            {{--  --}}
-                            <div class="form-group">
-                                <label>Facebook</label>
-                                <input type="text"
-                                    class="form-control
-                                @error('facebook') is-invalid @enderror"
-                                    name="facebook" value="{{ $brand->facebook }}">
-                                @error('facebook')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                            {{--  --}}
-                            <div class="form-group">
-                                <label>Twitter</label>
-                                <input type="text"
-                                    class="form-control
-                                @error('twitter') is-invalid @enderror"
-                                    name="twitter" value="{{ $brand->twitter }}">
-                                @error('twitter')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                            {{--  --}}
-                            <div class="form-group">
-                                <label>Rate Playstore</label>
-                                <input type="text"
-                                    class="form-control
-                                @error('rate_playstore') is-invalid @enderror"
-                                    name="rate_playstore" value="{{ $brand->rate_playstore }}">
-                                @error('rate_playstore')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                            {{--  --}}
-                            <div class="form-group">
-                                <label>Rate Appstore</label>
-                                <input type="text"
-                                    class="form-control
-                                @error('rate_appstore') is-invalid @enderror"
-                                    name="rate_appstore" value="{{ $brand->rate_appstore }}">
-                                @error('rate_appstore')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                            {{--  --}}
-                            <div class="form-group">
-                                <label>Playstore Link</label>
-                                <input type="text"
-                                    class="form-control
-                                @error('playstore_link') is-invalid @enderror"
-                                    name="playstore_link" value="{{ $brand->playstore_link }}">
-                                @error('playstore_link')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                            {{--  --}}
-                            <div class="form-group">
-                                <label>Appstore Link</label>
-                                <input type="text"
-                                    class="form-control
-                                @error('appstore_link') is-invalid @enderror"
-                                    name="appstore_link" value="{{ $brand->appstore_link }}">
-                                @error('appstore_link')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                            {{--  --}}
-                            <div class="form-group">
-                                <label class="form-label">Categories</label>
-                                @foreach ($categories as $category)
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input" type="checkbox" name="category_id[]"
-                                                value="{{ $category->id }}"
-                                                {{-- @if (in_array($category->id, $brand->category_id)) checked @endif --}}
-                                                >
-                                            {{ $category->name }}
-                                        </label>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-
-
-                        <div class="card-footer text-right">
-                            <button class="btn btn-primary">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -231,4 +202,12 @@
 @endsection
 
 @push('scripts')
+    <!-- JS Libraies -->
+    <script src="{{ asset('library/summernote/dist/summernote-bs4.js') }}"></script>
+    <script src="{{ asset('library/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js') }}"></script>
+    <script src="{{ asset('library/selectric/public/jquery.selectric.min.js') }}"></script>
+    <script src="{{ asset('library/upload-preview/upload-preview.js') }}"></script>
+
+    <!-- Page Specific JS File -->
+    <script src="{{ asset('js/page/features-post-create.js') }}"></script>
 @endpush

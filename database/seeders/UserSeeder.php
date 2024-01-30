@@ -22,5 +22,11 @@ class UserSeeder extends Seeder
             'phone' => '08123123123',
             'roles' => 'ADMIN',
         ]);
+
+        $category = \App\Models\Category::factory()->create([
+            'name' => 'category 1',
+            'hashtag' => 'news,job',
+            'icon' => '',
+        ]);
     }
 }

@@ -34,10 +34,24 @@ class BrandController extends Controller
         $data = $request->all();
         $data['user_id'] = $userId;
 
+        if ($request->hasFile('icon')) {
+            $filename = 'icon-' . time() . '.' . $request->icon->extension();
+            $request->icon->move(public_path('brand'), $filename);
+
+            $data['icon'] = $filename;
+        }   
+
+        if ($request->hasFile('banner')) {
+            $filename = 'banner-' . time() . '.' . $request->banner->extension();
+            $request->banner->move(public_path('brand'), $filename);
+
+            $data['banner'] = $filename;
+        }
+
         $brand = Brand::create($data);
 
         if (isset($data['category_id']) && is_array($data['category_id'])) {
-            $brand->categories()->sync($data['category_id']); // Base table or view not found: 1146 Table 'laravel-onlineshop.brand_category' doesn't exist
+            $brand->categories()->sync($data['category_id']);
         }
 
         return
@@ -52,16 +66,33 @@ class BrandController extends Controller
     {
         $brand = Brand::findOrFail($id);
         $categories = Category::all();
+
         return view('pages.brand.edit', compact('brand', 'categories'));
     }
 
     public function update(Request $request, $id)
     {
         $data = $request->all();
+
+        if ($request->hasFile('icon')) {
+            $filename = 'icon-' . time() . '.' . $request->icon->extension();
+            $request->icon->move(public_path('brand'), $filename);
+
+            $data['icon'] = $filename;
+        }
+
+        if ($request->hasFile('banner')) {
+            $filename = 'banner-' . time() . '.' . $request->banner->extension();
+            $request->banner->move(public_path('brand'), $filename);
+
+            $data['banner'] = $filename;
+        }
+
         $brand = brand::findOrFail($id);
         if (isset($data['category_id']) && is_array($data['category_id'])) {
             $brand->categories()->sync($data['category_id']); // Base table or view not found: 1146 Table 'laravel-onlineshop.brand_category' doesn't exist
         }
+
         $brand->update($data);
         return redirect()->route('brand.index')
             ->with(

@@ -17,6 +17,8 @@ class Brand extends Model
         'facebook',
         'twitter',
         'description',
+        'icon',
+        'banner',
         'rate_playstore',
         'rate_appstore',
         'playstore_link',
