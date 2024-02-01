@@ -33,7 +33,8 @@
                                 @method('PUT')
                                 <div class="card-body pt-5 pb-0">
                                     <div class="form-group row mb-4">
-                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Name</label>
+                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Name<span
+                                                class="text-danger">*</span></label>
                                         <div class="col-sm-12 col-md-7">
                                             <input required type="text" value="{{ $image->name }}"
                                                 class="form-control @error('name') is-invalid @enderror" name="name">
@@ -44,12 +45,16 @@
                                     </div>
                                     {{--  --}}
                                     <div class="form-group row mb-4">
-                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Hashtag</label>
+                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Hashtag<span
+                                                class="text-danger">*</span></label>
                                         <div class="col-sm-12 col-md-7">
                                             <input required type="text"
                                                 class="form-control @error('hashtag') is-invalid @enderror" name="hashtag"
                                                 placeholder="Enter hashtags, separated by commas"
                                                 value="{{ implode(',', json_decode($image->hashtag)) }}">
+                                            <small id="passwordHelpBlock" class="form-text text-muted">
+                                                Enter hashtags, separated by commas
+                                            </small>
                                         </div>
                                         @error('hashtag')
                                             <div class="invalid-feedback">{{ $message }}</div>
@@ -58,7 +63,7 @@
                                     {{--  --}}
                                     <div class="form-group row mb-4">
                                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Select
-                                            Module</label>
+                                            Module<span class="text-danger">*</span></label>
                                         <div class="col-sm-12 col-md-7">
                                             <select required name="module_id"
                                                 class="form-control select2 @error('module_id') is-invalid @enderror">
@@ -73,7 +78,8 @@
                                     </div>
                                     {{--  --}}
                                     <div class="form-group row mb-5">
-                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Caption</label>
+                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Caption<span
+                                                class="text-danger">*</span></label>
                                         <div class="col-sm-12 col-md-7">
                                             <textarea required class="summernote-simple  @error('caption') is-invalid @enderror" name="caption">
                                                 {{ $image->caption }}</textarea>

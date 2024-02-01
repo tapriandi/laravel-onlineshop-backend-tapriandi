@@ -4,12 +4,6 @@
 
 @push('style')
     <!-- CSS Libraries -->
-    <link rel="stylesheet" href="{{ asset('library/bootstrap-daterangepicker/daterangepicker.css') }}">
-    <link rel="stylesheet" href="{{ asset('library/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('library/select2/dist/css/select2.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('library/selectric/public/selectric.css') }}">
-    <link rel="stylesheet" href="{{ asset('library/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('library/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}">
 @endpush
 
 @section('main')
@@ -26,47 +20,49 @@
 
             <div class="section-body">
                 <h2 class="section-title">Category</h2>
+
                 <div class="card">
                     <form action="{{ route('category.update', $category) }}" method="POST">
                         @csrf
                         @method('PUT')
-                        <div class="card-header">
-                            <h4>Input Text</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label>Name</label>
-                                <input type="text"
-                                    class="form-control @error('name')
-                                is-invalid
-                            @enderror"
-                                    name="name" value="{{ $category->name }}">
-                                @error('name')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
+                        <div class="card-body pt-5">
+                            <div class="form-group row mb-4">
+                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Name<span
+                                        class="text-danger">*</span></label>
+                                <div class="col-sm-12 col-md-7">
+                                    <input required type="text" class="form-control @error('name') is-invalid @enderror"
+                                        name="name" value="{{ $category->name }}">
+                                    @error('name')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label>Hashtag</label>
-                                <input type="text"
-                                    class="form-control @error('hashtag')
-                                is-invalid
-                            @enderror"
-                                    name="hashtag" value="{{ implode(',', json_decode($category->hashtag)) }}">
-                                @error('hashtag')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
+                            <div class="form-group row mb-4">
+                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Hashtag<span
+                                        class="text-danger">*</span></label>
+                                <div class="col-sm-12 col-md-7">
+                                    <input required type="text" placeholder="Enter hashtags, separated by commas"
+                                        class="form-control @error('hashtag') is-invalid @enderror" name="hashtag"
+                                        value="{{ implode(',', json_decode($category->hashtag)) }}">
+                                    @error('hashtag')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                    <small id="passwordHelpBlock" class="form-text text-muted">
+                                        Enter hashtags, separated by commas
+                                    </small>
+                                </div>
                             </div>
-                        </div>
-                        <div class="card-footer text-right">
-                            <button class="btn btn-primary">Submit</button>
+
+                            <div class="card-footer text-right">
+                                <button class="btn btn-primary">Submit</button>
+                            </div>
                         </div>
                     </form>
                 </div>
-
             </div>
         </section>
     </div>
