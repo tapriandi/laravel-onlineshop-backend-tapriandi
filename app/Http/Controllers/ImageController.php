@@ -26,6 +26,14 @@ class ImageController extends Controller
 
     public function store(Request $request)
     {
+
+        $request->validate([
+            'name' => 'required',
+            'caption' => 'required',
+            'hashtag' => 'required',
+            'module_id' => 'required',
+        ]);
+
         $data = $request->all();
 
         $imageUrls = [];

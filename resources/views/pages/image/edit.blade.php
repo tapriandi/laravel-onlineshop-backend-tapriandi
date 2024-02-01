@@ -35,8 +35,8 @@
                                     <div class="form-group row mb-4">
                                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Name</label>
                                         <div class="col-sm-12 col-md-7">
-                                            <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                                name="name" value="{{ $image->name }}">
+                                            <input required type="text" value="{{ $image->name }}"
+                                                class="form-control @error('name') is-invalid @enderror" name="name">
                                         </div>
                                         @error('name')
                                             <div class="invalid-feedback">{{ $message }}</div>
@@ -46,7 +46,7 @@
                                     <div class="form-group row mb-4">
                                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Hashtag</label>
                                         <div class="col-sm-12 col-md-7">
-                                            <input type="text"
+                                            <input required type="text"
                                                 class="form-control @error('hashtag') is-invalid @enderror" name="hashtag"
                                                 placeholder="Enter hashtags, separated by commas"
                                                 value="{{ implode(',', json_decode($image->hashtag)) }}">
@@ -60,8 +60,8 @@
                                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Select
                                             Module</label>
                                         <div class="col-sm-12 col-md-7">
-                                            <select class="form-control select2 @error('module_id') is-invalid @enderror"
-                                                name="module_id">
+                                            <select required name="module_id"
+                                                class="form-control select2 @error('module_id') is-invalid @enderror">
                                                 @foreach ($modules as $module)
                                                     <option value="{{ $module->id }}"
                                                         selected={{ old('module_id') == $module->id && true }}>
@@ -75,7 +75,7 @@
                                     <div class="form-group row mb-5">
                                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Caption</label>
                                         <div class="col-sm-12 col-md-7">
-                                            <textarea class="summernote-simple  @error('caption') is-invalid @enderror" name="caption">
+                                            <textarea required class="summernote-simple  @error('caption') is-invalid @enderror" name="caption">
                                                 {{ $image->caption }}</textarea>
                                         </div>
                                         @error('caption')

@@ -30,12 +30,15 @@
                             <form id="form1" action="{{ route('image.store') }}" method="POST"
                                 enctype="multipart/form-data">
                                 @csrf
+
                                 <div class="card-body pt-5 pb-0">
                                     <div class="form-group row mb-4">
-                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Name</label>
+                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Name
+                                            <span class="text-danger">*</span>
+                                        </label>
                                         <div class="col-sm-12 col-md-7">
-                                            <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                                name="name">
+                                            <input required type="text"
+                                                class="form-control @error('name') is-invalid @enderror" name="name">
                                         </div>
                                         @error('name')
                                             <div class="invalid-feedback">{{ $message }}</div>
@@ -43,10 +46,11 @@
                                     </div>
                                     {{--  --}}
                                     <div class="form-group row mb-4">
-                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Hashtag</label>
+                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Hashtag<span
+                                                class="text-danger">*</span></label>
                                         <div class="col-sm-12 col-md-7">
-                                            <input type="text"
-                                                class="form-control @error('hashtag') is-invalid @enderror" name="hashtag"
+                                            <input required type="text" name="hashtag"
+                                                class="form-control @error('hashtag') is-invalid @enderror"
                                                 placeholder="Enter hashtags, separated by commas">
                                         </div>
                                         @error('hashtag')
@@ -56,10 +60,10 @@
                                     {{--  --}}
                                     <div class="form-group row mb-4">
                                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Select
-                                            Module</label>
+                                            Module<span class="text-danger">*</span></label>
                                         <div class="col-sm-12 col-md-7">
-                                            <select class="form-control select2 @error('module_id') is-invalid @enderror"
-                                                name="module_id">
+                                            <select required name="module_id"
+                                                class="form-control select2 is-invalid @error('module_id') is-invalid @enderror">
                                                 <option value="">-- select module --</option>
                                                 @foreach ($modules as $module)
                                                     <option value="{{ $module->id }}">
@@ -71,9 +75,10 @@
                                     </div>
                                     {{--  --}}
                                     <div class="form-group row mb-0">
-                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Caption</label>
+                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Caption<span
+                                                class="text-danger">*</span></label>
                                         <div class="col-sm-12 col-md-7">
-                                            <textarea class="summernote-simple  @error('caption') is-invalid @enderror" name="caption"></textarea>
+                                            <textarea required class="summernote-simple  @error('caption') is-invalid @enderror" name="caption"></textarea>
                                         </div>
                                         @error('caption')
                                             <div class="invalid-feedback">{{ $message }}</div>
