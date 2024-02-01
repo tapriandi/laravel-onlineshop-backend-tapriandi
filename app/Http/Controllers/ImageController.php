@@ -26,26 +26,29 @@ class ImageController extends Controller
 
     public function store(Request $request)
     {
-        {
-            $data = $request->all();
-            $hashtags = explode(',', $request->input('hashtag'));
-            $hashtags = array_map('trim', $hashtags);
-            $data['hashtag'] = json_encode($hashtags);
+        $data = $request->all();
 
-            if ($data['url']) {
-                $filename = time() . '.' . $request->url->extension();
-                $request->url->move(public_path('image'), $filename);
-
-                $data['url'] = $filename;
+        $imageUrls = [];
+        if ($request->hasFile('url')) {
+            foreach ($request->file('url') as $image) {
+                $filename = time() . '.' . $image->getClientOriginalName();
+                $image->move(public_path('image'), $filename);
+                $imageUrls[] = $filename;
             }
-
-            Image::create($data);
-            return redirect()->route('image.index')
-                ->with(
-                    'success',
-                    'Image successfully created'
-                );
         }
+
+        $data['url'] = json_encode($imageUrls);
+
+        $hashtags = explode(',', $request->input('hashtag'));
+        $hashtags = array_map('trim', $hashtags);
+        $data['hashtag'] = json_encode($hashtags);
+
+        Image::create($data);
+        return redirect()->route('image.index')
+            ->with(
+                'success',
+                'Image successfully created'
+            );
     }
 
     public function edit($id)
@@ -58,24 +61,38 @@ class ImageController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->all();
-        if ($request->hasFile('url')) {
-            $filename = time() . '.' . $request->url->extension();
-            $request->url->move(public_path('image'), $filename);
+        $image = Image::findOrFail($id);
 
-            $data['url'] = $filename;
+        $imageUrls = [];
+        if ($request->hasFile('url2')) {
+            foreach ($request->file('url2') as $image) {
+                $filename = time() . '.' . $image->getClientOriginalName();
+                $image->move(public_path('image'), $filename);
+                $imageUrls[] = $filename;
+            }
+        }
+
+        $newImages = [];
+        if (!($data['url'][0] == 1) && $request->hasFile('url2')) {
+            $newImages = array_merge($imageUrls, $data['url']);
+        } elseif (!($data['url'][0] == 1)) {
+            $newImages = $data['url'];
+        } elseif ($request->hasFile('url2')) {
+            $newImages = $imageUrls;
         }
 
         $hashtags = explode(',', $request->input('hashtag'));
         $hashtags = array_map('trim', $hashtags);
         $data['hashtag'] = json_encode($hashtags);
 
-        $image = Image::findOrFail($id);
+        $newImages = \array_diff($newImages, ["1"]);
+        $data['url'] = json_encode($newImages);
 
+        $image = Image::findOrFail($id);
         $image->update($data);
 
-        return
-            redirect()->route('image.index')
-            ->with('success', 'Image updated!');
+        return redirect()->route('image.index')
+            ->with('success', 'Image updated');
     }
 
     public function destroy($id)

@@ -74,8 +74,14 @@
                                                 <td>{{ $image->caption }}</td>
                                                 <td>
                                                     @if ($image->url)
-                                                        <img src="{{ asset('image/' . $image->url) }}" alt=""
-                                                            style="height:50px; width:100px; object-fit:cover;">
+                                                        @php
+                                                            $urls = json_decode($image->url);
+                                                            $firstImageUrl = !empty($urls) ? asset('image/' . $urls[0]) : null;
+                                                        @endphp
+                                                        @if ($firstImageUrl)
+                                                            <img src="{{ $firstImageUrl }}" alt=""
+                                                                style="height:50px; width:100px; object-fit:cover;">
+                                                        @endif
                                                     @endif
                                                 </td>
                                                 <td>
