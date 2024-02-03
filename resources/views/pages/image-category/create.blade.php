@@ -4,11 +4,7 @@
 
 @push('style')
     <!-- CSS Libraries -->
-    <link rel="stylesheet" href="{{ asset('library/bootstrap-daterangepicker/daterangepicker.css') }}">
-    <link rel="stylesheet" href="{{ asset('library/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('library/select2/dist/css/select2.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('library/selectric/public/selectric.css') }}">
-    <link rel="stylesheet" href="{{ asset('library/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('library/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}">
 @endpush
 
@@ -29,51 +25,61 @@
                 <div class="card">
                     <form action="{{ route('image-category.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label>Name</label>
-                                <input type="text"
-                                    class="form-control @error('name')
-                                is-invalid
-                            @enderror"
-                                    name="name">
-                                @error('name')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
+                        <div class="card-body pt-5">
+                            <div class="form-group row mb-4">
+                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Name
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-sm-12 col-md-7">
+                                    <input required type="text" name="name"
+                                        class="form-control @error('name') is-invalid @enderror">
+                                    @error('name')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
                             </div>
                             {{--  --}}
-                            <div class="form-group">
-                                <label>Hashtag</label>
-                                <input type="text" placeholder="Enter hashtags, separated by commas"
-                                    class="form-control @error('hashtag')
-                                is-invalid
-                            @enderror"
-                                    name="hashtag">
-                                @error('hashtag')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
+
+                            <div class="form-group row mb-4">
+                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Hashtag
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-sm-12 col-md-7">
+                                    <input required name="hashtag" type="text"
+                                        placeholder="Enter hashtags, separated by commas"
+                                        class="form-control @error('hashtag') is-invalid @enderror">
+                                    @error('hashtag')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <label class="form-label">Images</label>
-                                <select class="form-control selectric @error('image_id') is-invalid @enderror"
-                                    name="image_id">
-                                    <option value="">-- Select Image --</option>
-                                    @foreach ($images as $image)
-                                        <option value="{{ $image->id }}">
-                                            {{ $image->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                            <div class="form-group row mb-4">
+                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Images
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-sm-12 col-md-7">
+                                    <select required class="form-control select2 @error('image_id') is-invalid @enderror"
+                                        name="image_id">
+                                        <option value="">-- Select Image --</option>
+                                        @foreach ($images as $image)
+                                            <option value="{{ $image->id }}">
+                                                {{ $image->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <label>Upload Icon</label>
-                                <div class="col-sm-g">
+                            <div class="form-group row mb-4">
+                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Upload Icon
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-sm-12 col-md-7">
                                     <input type="file" class="form-control" name="icon"
                                         @error('icon') is-invalid @enderror>
                                     @error('icon')
@@ -87,6 +93,7 @@
                             <div class="card-footer text-right">
                                 <button class="btn btn-primary">Submit</button>
                             </div>
+                        </div>
                     </form>
                 </div>
 
@@ -96,4 +103,6 @@
 @endsection
 
 @push('scripts')
+    <!-- JS Libraies -->
+    <script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
 @endpush
