@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Brand;
-use App\Models\BrandCategory;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class BrandController extends Controller
 {
@@ -36,15 +35,15 @@ class BrandController extends Controller
 
         if ($request->hasFile('icon')) {
             $filename = 'icon-' . time() . '.' . $request->icon->extension();
-            $request->icon->move(public_path('brand'), $filename);
-
+            $iconPath = $request->file('icon')->storeAs('public/brand', $filename);
+            Storage::url($iconPath);
             $data['icon'] = $filename;
-        }   
+        }
 
         if ($request->hasFile('banner')) {
             $filename = 'banner-' . time() . '.' . $request->banner->extension();
-            $request->banner->move(public_path('brand'), $filename);
-
+            $iconPath = $request->file('banner')->storeAs('public/brand', $filename);
+            Storage::url($iconPath);
             $data['banner'] = $filename;
         }
 
@@ -76,21 +75,21 @@ class BrandController extends Controller
 
         if ($request->hasFile('icon')) {
             $filename = 'icon-' . time() . '.' . $request->icon->extension();
-            $request->icon->move(public_path('brand'), $filename);
-
+            $iconPath = $request->file('icon')->storeAs('public/brand', $filename);
+            Storage::url($iconPath);
             $data['icon'] = $filename;
         }
 
         if ($request->hasFile('banner')) {
             $filename = 'banner-' . time() . '.' . $request->banner->extension();
-            $request->banner->move(public_path('brand'), $filename);
-
+            $iconPath = $request->file('banner')->storeAs('public/brand', $filename);
+            Storage::url($iconPath);
             $data['banner'] = $filename;
         }
 
         $brand = brand::findOrFail($id);
         if (isset($data['category_id']) && is_array($data['category_id'])) {
-            $brand->categories()->sync($data['category_id']); // Base table or view not found: 1146 Table 'laravel-onlineshop.brand_category' doesn't exist
+            $brand->categories()->sync($data['category_id']);
         }
 
         $brand->update($data);

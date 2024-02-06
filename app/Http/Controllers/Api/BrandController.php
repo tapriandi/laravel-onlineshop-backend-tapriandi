@@ -14,25 +14,7 @@ class BrandController extends Controller
      */
     public function index(Request $request)
     {
-
-        $filterCategories = $request->input('filter', ''); // Handle missing filter
         $query = Brand::with('categories');
-
-        if ($filterCategories) {
-            try {
-                // Validate and cast filter categories to integers
-                $filterCategories = array_map('intval', explode(',', $filterCategories));
-
-                $query->whereHas('categories', function ($categoryQuery) use ($filterCategories) {
-                    $categoryQuery->whereIn('id', 1);
-                });
-            } catch (\Exception $e) {
-                return response()->json([
-                    'status' => 400,
-                    'message' => 'Invalid filter parameter',
-                ], 400);
-            }
-        }
 
         try {
             $brands = $query->get(); // Get brands before mapping
@@ -40,10 +22,11 @@ class BrandController extends Controller
             $data = $brands->map(function ($brand) {
                 return [
                     'id' => $brand->id,
-                    'icon' => $brand->icon,
+                    'country' => 'Indonesia',
                     'name' => $brand->name,
                     'slug' => $brand->name,
-                    'country' => 'Indonesia',
+                    'banner' => asset('brand/' . $brand->banner),
+                    'icon' => asset('brand/' . $brand->icon),
                     'categories' => $brand->categories->map(function ($category) {
                         return [
                             'id' => $category->id,
@@ -59,10 +42,9 @@ class BrandController extends Controller
                 'data' => $data,
             ], 200);
         } catch (\Exception $e) {
-            \Log::error($e->getMessage());
             return response()->json([
                 'status' => 500,
-                'message' => 'Internal Server Error',
+                'message' => $e->getMessage(),
             ], 500);
         }
     }
@@ -80,7 +62,34 @@ class BrandController extends Controller
      */
     public function show(string $id)
     {
-        //
+        // Post Detail
+        $brand = Brand::find($id);
+        $data = [
+            'id' => $brand->id,
+            'country' => 'Indonesia',
+            'name' => $brand->name,
+            'slug' => $brand->name,
+            'banner' => asset('brand/' . $brand->banner),
+            'icon' => asset('brand/' . $brand->icon),
+            'categories' => $brand->categories->map(function ($category) {
+                return [
+                    'id' => $category->id,
+                    'name' => $category->name,
+                ];
+            })->toArray(),
+        ];
+
+        if (!$brand) {
+            return response()->json([
+                'message' => 'Brand Not Found.'
+            ], 404);
+        }
+        // Return Json Response
+        return response()->json([
+            'status' => 200,
+            'message' => 'success',
+            'data' => $data
+        ], 200);
     }
 
     /**

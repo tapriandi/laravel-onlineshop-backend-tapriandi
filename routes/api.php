@@ -24,9 +24,19 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// Route::group(['middleware' => ['web']], function() {
+//     Route::get('storage/immage/{filename}', function ($filename) {
+//         return ::make(storage_path() . '/immage/' . $filename)->response();
+//     });
+// });
+
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::post('/register', [AuthController::class, 'register']);
 
-Route::get('/categories', [CategoryController::class, 'index']);
 Route::get('/brand', [BrandController::class, 'index']);
+Route::get('/brand/{id}', [BrandController::class, 'show']);
+
+Route::get('/categories', [CategoryController::class, 'index']);
+Route::get('/images', [ImageController::class, 'index']);
+Route::get('/module', [ModuleController::class, 'index']);
 
