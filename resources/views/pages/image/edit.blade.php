@@ -105,7 +105,7 @@
                                                                     value="{{ $url }}" class="imagecheck-input"
                                                                     checked />
                                                                 <figure class="imagecheck-figure">
-                                                                    <img src="{{ asset('image/' . $url) }}" alt=""
+                                                                    <img src="{{ asset('images/' . $url) }}" alt=""
                                                                         class="imagecheck-image">
                                                                 </figure>
                                                             </label>

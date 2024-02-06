@@ -76,7 +76,7 @@
                                                     @if ($image->url)
                                                         @php
                                                             $urls = json_decode($image->url);
-                                                            $firstImageUrl = !empty($urls) ? asset('image/' . $urls[0]) : null;
+                                                            $firstImageUrl = !empty($urls) ? asset('images/' . $urls[0]) : null;
                                                         @endphp
                                                         @if ($firstImageUrl)
                                                             <img src="{{ $firstImageUrl }}" alt=""

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Image;
 use App\Models\Module;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
 {
@@ -39,8 +40,9 @@ class ImageController extends Controller
         $imageUrls = [];
         if ($request->hasFile('url')) {
             foreach ($request->file('url') as $image) {
-                $filename = time() . '.' . $image->getClientOriginalName();
-                $image->move(public_path('image'), $filename);
+                $filename = 'image-' . time() . '.' . $image->getClientOriginalName();
+                $imagePath = $image->storeAs('public/images', $filename);
+                Storage::url($imagePath);
                 $imageUrls[] = $filename;
             }
         }
@@ -72,15 +74,18 @@ class ImageController extends Controller
         $image = Image::findOrFail($id);
 
         $imageUrls = [];
+
         if ($request->hasFile('url2')) {
             foreach ($request->file('url2') as $image) {
-                $filename = time() . '.' . $image->getClientOriginalName();
-                $image->move(public_path('image'), $filename);
+                $filename = 'image-' . time() . '.' . $image->getClientOriginalName();
+                $imagePath = $image->storeAs('public/images', $filename);
+                Storage::url($imagePath);
                 $imageUrls[] = $filename;
             }
         }
 
         $newImages = [];
+
         if (!($data['url'][0] == 1) && $request->hasFile('url2')) {
             $newImages = array_merge($imageUrls, $data['url']);
         } elseif (!($data['url'][0] == 1)) {
