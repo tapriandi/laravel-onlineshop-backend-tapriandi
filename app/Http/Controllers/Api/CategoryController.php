@@ -20,10 +20,15 @@ class CategoryController extends Controller
             return [
                 'id' => $category->id,
                 'name' => $category->name,
-                'icon' => $category->icon,
-                'slug' => $category->hashtag,
+                'hashtag' => json_decode($category->hashtag),
             ];
         })->toArray();
+
+        if (!$categories) {
+            return response()->json([
+                'message' => 'Categories Not Found.'
+            ], 404);
+        }
 
         return response()->json([
             'status' => 200,
@@ -45,7 +50,24 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $category = Category::find($id);
+        $data = [
+            'id' => $category->id,
+            'name' => $category->name,
+            'hashtag' => json_decode($category->hashtag),
+        ];
+
+        if (!$category) {
+            return response()->json([
+                'message' => 'Category Not Found.'
+            ], 404);
+        }
+        // Return Json Response
+        return response()->json([
+            'status' => 200,
+            'message' => 'success',
+            'data' => $data
+        ], 200);
     }
 
     /**

@@ -37,6 +37,8 @@ Route::get('/brand', [BrandController::class, 'index']);
 Route::get('/brand/{id}', [BrandController::class, 'show']);
 
 Route::get('/categories', [CategoryController::class, 'index']);
+Route::get('/categories/{id}', [CategoryController::class, 'show']);
+
 Route::get('/images', [ImageController::class, 'index']);
 Route::get('/module', [ModuleController::class, 'index']);
 
