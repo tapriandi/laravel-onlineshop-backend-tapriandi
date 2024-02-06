@@ -43,4 +43,5 @@ Route::get('/images', [ImageController::class, 'index']);
 Route::get('/images/{id}', [ImageController::class, 'show']);
 
 Route::get('/module', [ModuleController::class, 'index']);
+Route::get('/module/{id}', [ModuleController::class, 'show']);
 

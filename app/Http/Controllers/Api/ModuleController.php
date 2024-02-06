@@ -3,36 +3,31 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Image;
+use App\Models\Module;
 use Illuminate\Http\Request;
 
-class ImageController extends Controller
+class ModuleController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $images = Image::all();
+        $modules = Module::all();
 
-        $data = $images->map(function ($image) {
-            $imageUrls = json_decode($image->url);
-
+        $data = $modules->map(function ($module) {
             return [
-                'id' => $image->id,
-                'name' => $image->name,
-                'module_id' => $image->module_id,
-                'caption' => $image->caption,
-                'hashtag' => json_decode($image->hashtag),
-                'url' => array_map(function ($url) {
-                    return asset('images/' . $url);
-                }, $imageUrls),
+                'id' => $module->id,
+                'name' => $module->name,
+                'brand_id' => $module->module_id,
+                'description' => json_decode($module->hashtag),
+                'icon' => asset('module/' . $module->icon),
             ];
         })->toArray();
 
-        if (!$images) {
+        if (!$modules) {
             return response()->json([
-                'message' => 'Images Not Found.'
+                'message' => 'Modules Not Found.'
             ], 404);
         }
 
@@ -56,24 +51,18 @@ class ImageController extends Controller
      */
     public function show(string $id)
     {
-        $image = Image::find($id);
-
-        $imageUrls = json_decode($image->url);
-
+        $module = Module::find($id);
         $data = [
-            'id' => $image->id,
-            'name' => $image->name,
-            'module_id' => $image->module_id,
-            'caption' => $image->caption,
-            'hashtag' => json_decode($image->hashtag),
-            'url' => array_map(function ($url) {
-                return asset('images/' . $url);
-            }, $imageUrls),
+            'id' => $module->id,
+            'name' => $module->name,
+            'brand_id' => $module->module_id,
+            'description' => json_decode($module->hashtag),
+            'icon' => asset('module/' . $module->icon),
         ];
 
-        if (!$image) {
+        if (!$module) {
             return response()->json([
-                'message' => 'Image Not Found.'
+                'message' => 'Module Not Found.'
             ], 404);
         }
         // Return Json Response

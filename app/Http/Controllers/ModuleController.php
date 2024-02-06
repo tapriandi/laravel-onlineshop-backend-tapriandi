@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Models\Module;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ModuleController extends Controller
 {
@@ -29,9 +30,9 @@ class ModuleController extends Controller
         $data = $request->all();
 
         if ($data['icon']) {
-            $filename = time() . '.' . $request->icon->extension();
-            $request->icon->move(public_path('module'), $filename);
-
+            $filename = 'module-' . time() . '.' . $request->icon->extension();
+            $iconPath = $request->file('icon')->storeAs('public/module', $filename);
+            Storage::url($iconPath);
             $data['icon'] = $filename;
         }
 
@@ -55,9 +56,9 @@ class ModuleController extends Controller
     {
         $data = $request->all();
         if ($request->hasFile('icon')) {
-            $filename = time() . '.' . $request->icon->extension();
-            $request->icon->move(public_path('module'), $filename);
-
+            $filename = 'module-' . time() . '.' . $request->icon->extension();
+            $iconPath = $request->file('icon')->storeAs('public/module', $filename);
+            Storage::url($iconPath);
             $data['icon'] = $filename;
         }
         $module = Module::findOrFail($id);
