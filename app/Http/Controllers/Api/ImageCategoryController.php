@@ -3,31 +3,31 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Module;
+use App\Models\ImageCategory;
 use Illuminate\Http\Request;
 
-class ModuleController extends Controller
+class ImageCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $modules = Module::all();
+        $imageCategory = ImageCategory::all();
 
-        $data = $modules->map(function ($module) {
+        $data = $imageCategory->map(function ($image) {
             return [
-                'id' => $module->id,
-                'name' => $module->name,
-                'brand_id' => $module->brand_id,
-                'description' => json_decode($module->description),
-                'icon' => asset('module/' . $module->icon),
+                'id' => $image->id,
+                'name' => $image->name,
+                'image_id' => $image->image_id,
+                'hashtag' => json_decode($image->hashtag),
+                'icon' => asset('imageCategory/' . $image->icon),
             ];
         })->toArray();
 
-        if (!$modules) {
+        if (!$imageCategory) {
             return response()->json([
-                'message' => 'Modules Not Found.'
+                'message' => 'Image Categories Not Found.'
             ], 404);
         }
 
@@ -51,18 +51,19 @@ class ModuleController extends Controller
      */
     public function show(string $id)
     {
-        $module = Module::find($id);
+        $image = ImageCategory::find($id);
+
         $data = [
-            'id' => $module->id,
-            'name' => $module->name,
-            'brand_id' => $module->brand_id,
-            'description' => json_decode($module->description),
-            'icon' => asset('module/' . $module->icon),
+            'id' => $image->id,
+            'name' => $image->name,
+            'image_id' => $image->image_id,
+            'hashtag' => json_decode($image->hashtag),
+            'icon' => asset('imageCategory/' . $image->icon),
         ];
 
-        if (!$module) {
+        if (!$image) {
             return response()->json([
-                'message' => 'Module Not Found.'
+                'message' => 'Image Category Not Found.'
             ], 404);
         }
         // Return Json Response
